@@ -17,7 +17,6 @@ import com.inatel.stockquotemanager.dto.StockDto;
 import com.inatel.stockquotemanager.dto.StockQuoteDto;
 import com.inatel.stockquotemanager.form.QuoteForm;
 import com.inatel.stockquotemanager.model.Quote;
-import com.inatel.stockquotemanager.repository.QuoteRepository;
 import com.inatel.stockquotemanager.service.QuoteService;
 import com.inatel.stockquotemanager.service.StockService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class QuoteController {
 	
 	//Listing All the stocks with their quotes
 	@GetMapping
-	public List<StockQuoteDto> ListingAll(){			
+	public ResponseEntity<List<StockQuoteDto>> ListingAll(){			
 		
 		log.info("Listing all the stocks with the quotes.");
 		List<StockDto> stocks = stockService.getAll();
@@ -47,7 +46,8 @@ public class QuoteController {
 			stockQuoteDto.add(new StockQuoteDto(quotes, stock.getId()));
 		});
 		
-		return stockQuoteDto;		
+		//return stockQuoteDto;		
+		return ResponseEntity.status(200).body(stockQuoteDto);
 	}
 	
 	//Listing one stock at a time
